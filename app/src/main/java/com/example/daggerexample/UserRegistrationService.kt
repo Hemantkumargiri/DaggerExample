@@ -1,15 +1,15 @@
 package com.example.daggerexample
 
 import javax.inject.Inject
+import javax.inject.Named
 
 class UserRegistrationService @Inject constructor(
     private val userRepository: UserRepository,
-    private val notificationService: NotificationService) {
+    @MessageQualifier private val notificationService: NotificationService
+) {
 
-    fun registerUser(email:String,password:String)
-    {
+    fun registerUser(email: String, password: String) {
         userRepository.saveUser(email, password)
-        notificationService.send(email,"no-reply@cheezycode.com","User Registered")
+        notificationService.send(email, "no-reply@cheezycode.com", "User Registered")
     }
-
 }

@@ -1,14 +1,19 @@
 package com.example.daggerexample
 
+import com.cheezycode.daggerexample.ActivityScope
+import dagger.BindsInstance
 import dagger.Component
+import dagger.Subcomponent
 
 
-@Component (modules = [UserRepositoryModule::class, NotificationServiceModule::class])
+@ActivityScope
+@Subcomponent(modules = [UserRepositoryModule::class, NotificationServiceModule::class])
 interface UserRegistrationComponent {
 
-   /* fun getUserRegistrationService(): UserRegistrationService
-
-    fun getEmailService(): EmailService*/
-
     fun inject(mainActivity: MainActivity)
+
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(@BindsInstance retryCount: Int): UserRegistrationComponent
+    }
 }
